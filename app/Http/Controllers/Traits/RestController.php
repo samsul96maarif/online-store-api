@@ -37,18 +37,24 @@ trait RestController
                 $data
             );
         } catch (\Exception $e) {
-            return $this->json(400, $e->getMessage());
+            $code = ($e->getCode() > 100 && $e->getCode() < 599) ? $e->getCode() : Response::HTTP_BAD_REQUEST;
+            return $this->json($code, $e->getMessage(), []);
         }
     }
 
     public function list()
     {
-        $data = $this->repository->list();
-        return $this->json(
-            Response::HTTP_OK,
-            "$this->name Fetched.",
-            $data
-        );
+        try {
+            $data = $this->repository->list();
+            return $this->json(
+                Response::HTTP_OK,
+                "$this->name Fetched.",
+                $data
+            );
+        }catch (\Exception $e){
+            $code = ($e->getCode() > 100 && $e->getCode() < 599) ? $e->getCode() : Response::HTTP_BAD_REQUEST;
+            return $this->json($code, $e->getMessage(), []);
+        }
     }
 
     /**
@@ -67,7 +73,8 @@ trait RestController
                     $dataById
                 );
         } catch (\Exception $e) {
-            throw $e;
+            $code = ($e->getCode() > 100 && $e->getCode() < 599) ? $e->getCode() : Response::HTTP_BAD_REQUEST;
+            return $this->json($code, $e->getMessage(), []);
         }
     }
 
@@ -86,7 +93,8 @@ trait RestController
                 $data
             );
         } catch (\Exception $e) {
-            return $this->json(400, $e->getMessage());
+            $code = ($e->getCode() > 100 && $e->getCode() < 599) ? $e->getCode() : Response::HTTP_BAD_REQUEST;
+            return $this->json($code, $e->getMessage(), []);
         }
     }
 
@@ -107,7 +115,8 @@ trait RestController
                     $data
                 );
         } catch (\Exception $e) {
-            throw $e;
+            $code = ($e->getCode() > 100 && $e->getCode() < 599) ? $e->getCode() : Response::HTTP_BAD_REQUEST;
+            return $this->json($code, $e->getMessage(), []);
         }
     }
 
@@ -122,12 +131,13 @@ trait RestController
         try {
             $this->repository->remove($id);
            return $this->json(
-                    Response::HTTP_ACCEPTED,
+                    Response::HTTP_NO_CONTENT,
                     "The $this->name $id was deleted.",
                     []
                 );
         } catch (\Exception $e) {
-            throw $e;
+            $code = ($e->getCode() > 100 && $e->getCode() < 599) ? $e->getCode() : Response::HTTP_BAD_REQUEST;
+            return $this->json($code, $e->getMessage(), []);
         }
     }
 }
