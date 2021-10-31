@@ -17,5 +17,6 @@ class ProductController extends BaseController
     {
         $this->repository = $repository;
         $this->middleware('auth:sanctum')->except(['show', 'index']);
+        $this->middleware('is.admin')->only(['store', 'update', 'delete']);
     }
 }
