@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Log;
 
 class InvoiceRepository extends Repository implements InvoiceContract
 {
+    protected $order_by = 'desc';
     public function getModel()
     {
         return Invoice::ins();
@@ -32,7 +33,7 @@ class InvoiceRepository extends Repository implements InvoiceContract
             $data = $this->getModel();
             $privilege = (\auth()->user()->hasRole([RoleConstant::SUPER_ADMIN, RoleConstant::ADMIN]));
             if (!$privilege) $data = $data->where('user_id', auth()->user()->id);
-            return $data->paginate($request->per_page);
+            return $data->orderBy($this->sortBy, $this->order_by)->paginate($request->per_page);
         } catch (\Exception $e) {
             throw $e;
         }
@@ -44,7 +45,7 @@ class InvoiceRepository extends Repository implements InvoiceContract
             $data = DB::table('invoices');
             $privilege = (\auth()->user()->hasRole([RoleConstant::SUPER_ADMIN, RoleConstant::ADMIN]));
             if (!$privilege) $data = $data->where('user_id', auth()->user()->id);
-            return $data->get();
+            return $data->orderBy($this->sortBy, $this->order_by)->get();
         }catch (\Exception $e){
             throw $e;
         }
