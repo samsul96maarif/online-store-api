@@ -131,7 +131,7 @@ trait RestController
         try {
             $this->repository->remove($id);
            return $this->json(
-                    Response::HTTP_NO_CONTENT,
+                    Response::HTTP_ACCEPTED,
                     "The $this->name $id was deleted.",
                     []
                 );

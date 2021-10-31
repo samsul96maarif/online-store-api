@@ -13,6 +13,9 @@ abstract class Repository
 {
     use RestfulRepository, HelperTrait;
 
-    protected
-        $sortBy = ['created_at'];
+    protected $name = 'Repository', $create_activity_name = null,
+        $update_activity_name = null, $delete_activity_name = null,
+        $using_log_modul = false,
+        $order_by = 'asc',
+        $sortBy = 'created_at';
 }

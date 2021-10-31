@@ -7,8 +7,9 @@
 namespace App\Repositories\Contracts;
 
 use App\Repositories\Contracts\RepositoryContract;
+use Illuminate\Http\Request;
 
 interface ProductContract extends RepositoryContract
 {
-
+    public function removeWithLog($id, Request $request);
 }

@@ -6,6 +6,9 @@
 
 namespace App\Repositories\Traits;
 
+use App\Models\ComActivityTable;
+use App\Models\ComLog;
+use App\Models\ComLogDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +27,7 @@ trait RestfulRepository
     public function fetch(Request $request)
     {
         try {
-            $data = $this->getModel()->paginate($request->per_page);
+            $data = $this->getModel()->orderBy($this->sortBy, $this->order_by)->paginate($request->per_page);
             return $data;
         } catch (\Exception $e) {
             throw $e;
@@ -37,7 +40,7 @@ trait RestfulRepository
     public function list()
     {
         try{
-            return $this->getModel()->get();
+            return $this->getModel()->orderBy($this->sortBy, $this->order_by)->get();
         }catch (\Exception $e){
             throw $e;
         }
@@ -64,10 +67,20 @@ trait RestfulRepository
     public function store($request)
     {
         try {
+            DB::beginTransaction();
             $model = $this->getModel()->pop($request);
             if(!$model->save()) throw new \Exception('Data stored unsuccessfully');
+            if ($this->using_log_modul){
+                $com_activity_name = is_null($this->create_activity_name) ? 'Create '.$this->name : $this->create_activity_name;
+                $comLogId = ComLog::ins()->pop($com_activity_name, $request);
+                $comATModel = ComActivityTable::findByTableAndActivity($this->getModel()->getTable(), $com_activity_name);
+                if (is_null($comATModel)) throw new \Exception("Something wrong");
+                ComLogDetail::ins()->pop($comLogId, 'create', $comATModel->id, $model->toArray(), [], $model->id);
+            }
+            DB::commit();
             return  $model;
         } catch (\Exception $e) {
+            DB::rollBack();
             throw $e;
         }
     }
@@ -81,10 +94,21 @@ trait RestfulRepository
     public function update($id, Request $request)
     {
         try {
+            DB::beginTransaction();
             $result = $this->getModel()->find($id);
+            $oldValue = $result->toArray();
             if (!$result->pop($request)->save()) throw new \Exception('Data updated unsuccessfully');
+            if ($this->using_log_modul){
+                $com_activity_name = is_null($this->update_activity_name) ? 'Update '.$this->name : $this->create_activity_name;
+                $comLogId = ComLog::ins()->pop($com_activity_name, $request);
+                $comATModel = ComActivityTable::findByTableAndActivity($this->getModel()->getTable(), $com_activity_name);
+                if (is_null($comATModel)) throw new \Exception("Something wrong");
+                ComLogDetail::ins()->pop($comLogId, 'update', $comATModel->id, $result->toArray(), $oldValue, $id);
+            }
+            DB::commit();
             return $result;
         } catch (\Exception $e) {
+            DB::rollBack();
             throw $e;
         }
     }
