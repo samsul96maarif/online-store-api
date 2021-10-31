@@ -33,49 +33,8 @@ class CartController extends BaseController
                 $data
             );
         } catch (\Exception $e) {
-            return $this->json(400, $e->getMessage());
-        }
-    }
-
-    public function updateDetail(Request $request)
-    {
-        try {
-            $res = $this->repository->modifyDetail($request, CartConstant::UPDATE_ACTION);
-            return $this->json(
-                Response::HTTP_ACCEPTED,
-                "Update keranjang berhasil.",
-                $res);
-        }catch (\Exception $e){
-            $this->makeLogInfo($e->getMessage());
-            return $this->json(Response::HTTP_BAD_REQUEST, $e->getMessage());
-        }
-    }
-
-    public function deleteDetail(Request $request)
-    {
-        try {
-            $res = $this->repository->modifyDetail($request, CartConstant::DELETE_ACTION);
-            return $this->json(
-                Response::HTTP_ACCEPTED,
-                "menghapus produk dari keranjang berhasil.",
-                $res);
-        }catch (\Exception $e){
-            $this->makeLogInfo($e->getMessage());
-            return $this->json(Response::HTTP_BAD_REQUEST, $e->getMessage());
-        }
-    }
-
-    public function getDetails($id)
-    {
-        try {
-            return $this->json(
-                Response::HTTP_OK,
-                "get Detail List",
-                $this->repository->detail($id)
-            );
-        } catch
-        (\Exception $e) {
-            throw $e;
+            $code = ($e->getCode() > 100 && $e->getCode() < 599) ? $e->getCode() : Response::HTTP_BAD_REQUEST;
+            return $this->json($code, $e->getMessage(), []);
         }
     }
 }

@@ -34,16 +34,10 @@ class CartRepository extends Repository implements CartContract
     public function byId($id)
     {
         try {
-            $data = $this
-                ->getModel()
-                ->where([
-                    'id' => $id,
-                    'user_id' => auth()->user()->id
-                ])
-                ->with('product')
-                ->first();
-            if (!$data) throw new \Exception("Data not found");
-            return $data;
+            $where = ['id' => $id];
+            if (!auth()->user()->hasRole([RoleConstant::SUPER_ADMIN, RoleConstant::ADMIN])) $where['user_id'] = auth()->user()->id;
+            $data = $this->getModel()->where($where)->with('product');
+            return $data->firstOrFail();
         } catch (\Exception $e) {
             throw $e;
         }
@@ -54,11 +48,16 @@ class CartRepository extends Repository implements CartContract
         try {
             if(is_null($request->product_id)) throw new \Exception("Pilih produk terlebih dahulu!");
             $product = Product::findOrFail($request->product_id);
-            $request->request->add(['user_id' => auth()->user()->id]);
+            if (auth()->user()->hasRole([RoleConstant::SUPER_ADMIN, RoleConstant::ADMIN])) {
+                $userId = is_null($request->user_id) ?? auth()->user()->id;
+            } else {
+                $userId = auth()->user()->id;
+            }
+            $request->request->add(['user_id' => $userId]);
 
             $model = Cart::where([
                 'product_id' => $request->product_id,
-                'user_id' => auth()->user()->id
+                'user_id' => $userId
             ])->first();
 
             DB::beginTransaction();
@@ -83,10 +82,10 @@ class CartRepository extends Repository implements CartContract
     public function update($id, Request $request)
     {
         try {
-            $model = $this->getModel()->where([
-                'user_id' => auth()->user()->id,
-                'id' => $id
-            ])->first();
+            $where = ['id' => $id];
+            if (!auth()->user()->hasRole([RoleConstant::SUPER_ADMIN, RoleConstant::ADMIN])) $where['user_id'] = auth()->user()->id;
+            $model = $this->getModel()->where($where)->first();
+
             if (is_null($model)) throw new \Exception('Data tidak ditemukan');
             $product = Product::findOrFail($request->product_id);
             DB::beginTransaction();
@@ -114,10 +113,9 @@ class CartRepository extends Repository implements CartContract
     {
         try {
             DB::beginTransaction();
-            $model = $this->getModel()->where([
-                'id' => $id,
-                'user_id' => auth()->user()->id
-            ])->first();
+            $where = ['id' => $id];
+            if (!auth()->user()->hasRole([RoleConstant::SUPER_ADMIN, RoleConstant::ADMIN])) $where['user_id'] = auth()->user()->id;
+            $model = $this->getModel()->where($where)->first();
             if (is_null($model)) throw new \Exception('Data tidak ditemukan');
             $product = Product::ins()->where('id', $model->product_id)->first();
             if (is_null($product)) throw new \Exception('Produk tidak ditemukan');

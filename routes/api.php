@@ -1,4 +1,8 @@
 <?php
+/*
+ * Author: Samsul Ma'arif <samsulma828@gmail.com>
+ * Copyright (c) 2021.
+ */
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +37,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 });
 
-Route::resource('carts', \App\Http\Controllers\CartController::class);
 Route::resources([
     'products' => \App\Http\Controllers\ProductController::class,
     'carts' => \App\Http\Controllers\CartController::class,
