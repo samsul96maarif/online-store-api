@@ -1,0 +1,22 @@
+http://localhost:8000/api/me
+Authorization: Bearer 4|RtFMeY70ptv2KvevdmUzZCaV5qcGStBAEs2piu3X
+
+###
+POST http://localhost:8000/api/register
+Content-Type: application/json
+
+{
+    "email":"samsulma828@gmail.com",
+    "name":"sam",
+    "password":"123456",
+    "password_confirmation": "123456"
+}
+###
+PUT http://localhost:8000/api/carts
+Content-Type: application/json
+Authorization: Bearer 8|eUdXJg74PBOgLYjtP3QPf1KEXbpo6eSA3LMBqRnJ
+
+{
+    "product_id": 2,
+    "qty": 3
+}
