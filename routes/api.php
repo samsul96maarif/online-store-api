@@ -37,8 +37,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 });
 
+Route::delete('products/{id}', [\App\Http\Controllers\ProductController::class, 'delete'])->middleware(['auth:sanctum', 'is.admin']);
+Route::resource('products', \App\Http\Controllers\ProductController::class)->except(['destroy']);
 Route::resources([
-    'products' => \App\Http\Controllers\ProductController::class,
     'carts' => \App\Http\Controllers\CartController::class,
     'checkouts' => \App\Http\Controllers\InvoiceController::class
 ]);
