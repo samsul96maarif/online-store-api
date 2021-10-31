@@ -53,11 +53,11 @@ class InvoiceRepository extends Repository implements InvoiceContract
     public function byId($id)
     {
         try {
-            $data = $this->getModel()->where('id', $id)->with(['details' => function ($q) {
+            $where = ['id' => $id];
+            if(!\auth()->user()->hasRole([RoleConstant::SUPER_ADMIN, RoleConstant::ADMIN])) $where['user_id'] = auth()->user()->id;
+            $data = $this->getModel()->where($where)->with(['details' => function ($q) {
                 return $q->with('product');
             }]);
-            $privilege = (\auth()->user()->hasRole([RoleConstant::SUPER_ADMIN, RoleConstant::ADMIN]));
-            if (!$privilege) $data = $data->where('user_id', auth()->user()->id);
             return $data->first();
         } catch (\Exception $e) {
             throw $e;
@@ -95,9 +95,6 @@ class InvoiceRepository extends Repository implements InvoiceContract
                 if (!$detail->save()) throw new \Exception("Storing detail failed");
                 if (!$cart->delete()) throw new \Exception("Gagal memindahkan keranjang ke checkout");
             }
-//            collect($request->details)->each(function($o) use ($result) {
-//                return $this->_addDetail($result, new Request($o));
-//            });
 
             $invDetail = DB::table('invoice_details')
                 ->select(DB::raw('sum(qty * price) total'))
