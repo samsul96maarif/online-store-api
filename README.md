@@ -1,6 +1,6 @@
-#Online Store API
+# Online Store API
 
-##Deksripsi
+## Deksripsi
 Based on the stated facts above, please do the following things:
 1. Describe what you think happened that caused those bad reviews during our 12.12 event and why it happened. Put this in a section in
    your README.md file.
@@ -8,16 +8,16 @@ Based on the stated facts above, please do the following things:
    file.
 3. Based on your proposed solution, build a Proof of Concept that demonstrates technically how your solution will work.
 
-##Solusi
+## Solusi
 1. Ada beberapa kemungkinan, jika melihat dari deskripsi soal:
    - pada saat itu sistem tetap membolehkan barang ditambahkan ke dalam keranjang, walaupun stok barang sudah 0 atau minus
 2. Untuk menghindari kejadian seperti yang di deskripsi, maka solusinya saat menambahkan barang ke dalam keranjang, maka perlu dilakukna pengecekan stok terlebih dahulu.
 
-##requirement
+## Requirement
 1. ^php7.4 
 2. composer 2.1.3
 
-##Tutorial
+## Tutorial
 1. Install composer
 2. Jalankan perintah "composer install"
 3. copy file ".env.example" ke ".env"
@@ -35,7 +35,7 @@ Based on the stated facts above, please do the following things:
 11. Gunakan API "Create Checkout" untuk melakukan checkout
 12. Gunakan API "Update Checkout" untuk mengubah status pembayaran "awaiting" menjadi "paid"
 
-##Note
+## Note
 1. pada applikasi sudah memiliki Admin dengan username "admin@gmail" dengan password "123456"
 
 
