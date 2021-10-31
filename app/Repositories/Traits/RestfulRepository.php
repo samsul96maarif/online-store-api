@@ -1,7 +1,7 @@
 <?php
 /*
- * Autrhor: Samsul Ma'arif <samsulma828@gmail.com>
- * Copyright (c) 2021.
+ * Author: Samsul Ma'arif <samsulma828@gmail.com>
+ * Copyright (c) 2021-2021.
  */
 
 namespace App\Repositories\Traits;
@@ -36,8 +36,11 @@ trait RestfulRepository
      */
     public function list()
     {
-        return $this->getModel()->get();
-//        ->where('deleted_at', null)->get();
+        try{
+            return $this->getModel()->get();
+        }catch (\Exception $e){
+            throw $e;
+        }
     }
 
     /**
@@ -46,7 +49,11 @@ trait RestfulRepository
      */
     public function byId($id)
     {
-        return $this->getModel()->find($id);
+        try {
+            return $this->getModel()->find($id);
+        }catch (\Exception $e){
+            throw $e;
+        }
     }
 
     /**
