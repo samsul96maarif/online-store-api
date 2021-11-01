@@ -49,7 +49,7 @@ class CartRepository extends Repository implements CartContract
             if(is_null($request->product_id)) throw new \Exception("Pilih produk terlebih dahulu!");
             $product = Product::findOrFail($request->product_id);
             if (auth()->user()->hasRole([RoleConstant::SUPER_ADMIN, RoleConstant::ADMIN])) {
-                $userId = is_null($request->user_id) ?? auth()->user()->id;
+                $userId = $request->user_id ?? auth()->user()->id;
             } else {
                 $userId = auth()->user()->id;
             }
