@@ -35,6 +35,7 @@ Based on the stated facts above, please do the following things:
 10. Gunakan API "Create Cart" untuk menambahkan barang kedalam keranjang
 11. Gunakan API "Create Checkout" untuk melakukan checkout
 12. Gunakan API "Update Checkout" untuk mengubah status pembayaran "awaiting" menjadi "paid"
+13. Untuk menjalankan auto testing berikan perintah pada terminal "php artisan test", maka applikasi akan melakukan testing add product to cart jika stok barang tersedia atau tidak, dan akan menjalankan alur bisnis online store
 
 ## Dokumen
 1. dokumen postman https://documenter.getpostman.com/view/6403024/UVByKAyr
