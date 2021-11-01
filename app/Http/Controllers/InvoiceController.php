@@ -17,6 +17,5 @@ class InvoiceController extends BaseController
     {
         $this->repository = $repository;
         $this->middleware('auth:sanctum');
-        $this->middleware('is.admin')->only(['update']);
     }
 }
