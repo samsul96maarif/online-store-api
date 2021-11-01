@@ -30,11 +30,14 @@ Based on the stated facts above, please do the following things:
 7. Untuk menjalankan applikasi, bisa menggunakan:
    1. perintah "php artisan serve" maka applikasi akan berjalan pada port 8000
    2. letakkan file applikasi ke dalam folder /var/www/html
-8. Daftarkan diri menggunakan API "Register", atau bisa menggunakan user yang telah digenerate dengan username "user@evermos" password "123456"
+8. Daftarkan diri menggunakan API "Register", atau bisa menggunakan user yang telah digenerate dengan username "user@evermos.com" password "123456"
 9. Gunakan API "List Products" untuk melihat daftar barang
 10. Gunakan API "Create Cart" untuk menambahkan barang kedalam keranjang
 11. Gunakan API "Create Checkout" untuk melakukan checkout
 12. Gunakan API "Update Checkout" untuk mengubah status pembayaran "awaiting" menjadi "paid"
+
+## Dokumen
+1. dokumen postman https://documenter.getpostman.com/view/6403024/UVByKAyr
 
 ## Note
 1. pada applikasi sudah memiliki 2 user Admin dengan username "admin@evermos.com" dan user biasa dengan username "user@evermos.com" dengan password "123456"
