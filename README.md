@@ -11,6 +11,7 @@ Based on the stated facts above, please do the following things:
 ## Solusi
 1. Ada beberapa kemungkinan, jika melihat dari deskripsi soal:
    - pada saat itu sistem tetap membolehkan barang ditambahkan ke dalam keranjang, walaupun stok barang sudah 0 atau minus
+   - kurangnya validasi saat update cart/keranjang
 2. Untuk menghindari kejadian seperti yang di deskripsi, maka solusinya saat menambahkan barang ke dalam keranjang, maka perlu dilakukna pengecekan stok terlebih dahulu.
 
 ## Requirement
