@@ -38,8 +38,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 Route::delete('products/{id}', [\App\Http\Controllers\ProductController::class, 'delete'])->middleware(['auth:sanctum', 'is.admin']);
-Route::resource('products', \App\Http\Controllers\ProductController::class)->except(['destroy']);
-Route::resources([
+Route::apiResource('products', \App\Http\Controllers\ProductController::class)->except(['destroy']);
+Route::apiResources([
     'carts' => \App\Http\Controllers\CartController::class,
     'checkouts' => \App\Http\Controllers\InvoiceController::class
 ]);

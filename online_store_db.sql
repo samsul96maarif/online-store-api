@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 31, 2021 at 01:42 PM
+-- Generation Time: Nov 01, 2021 at 09:41 PM
 -- Server version: 10.3.31-MariaDB-0ubuntu0.20.04.1
 -- PHP Version: 7.4.25
 
@@ -36,6 +36,122 @@ CREATE TABLE `carts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `com_activities`
+--
+
+CREATE TABLE `com_activities` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `com_activities`
+--
+
+INSERT INTO `com_activities` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Create Product', 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(2, 'Update Product', 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(3, 'Delete Product', 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(4, 'Create Cart', 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(5, 'Update Cart', 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(6, 'Delete Cart', 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(7, 'Create Invoice', 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(8, 'Update Invoice', 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(9, 'Delete Invoice', 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `com_activity_tables`
+--
+
+CREATE TABLE `com_activity_tables` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `com_table_id` bigint(20) UNSIGNED NOT NULL,
+  `com_activity_id` bigint(20) UNSIGNED NOT NULL,
+  `sequence` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `com_activity_tables`
+--
+
+INSERT INTO `com_activity_tables` (`id`, `com_table_id`, `com_activity_id`, `sequence`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, NULL, NULL),
+(2, 1, 2, 1, NULL, NULL),
+(3, 1, 3, 1, NULL, NULL),
+(4, 1, 4, 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(5, 3, 4, 2, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(6, 1, 5, 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(7, 3, 5, 2, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(8, 1, 6, 1, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(9, 3, 6, 2, '2021-11-01 07:36:48', '2021-11-01 07:36:48');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `com_logs`
+--
+
+CREATE TABLE `com_logs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `com_activity_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `ip_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_agent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `com_log_details`
+--
+
+CREATE TABLE `com_log_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `com_log_id` bigint(20) UNSIGNED NOT NULL,
+  `com_activity_table_id` bigint(20) UNSIGNED NOT NULL,
+  `operation` enum('create','update','delete') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `old_value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `new_value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sequence` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `com_tables`
+--
+
+CREATE TABLE `com_tables` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `com_tables`
+--
+
+INSERT INTO `com_tables` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'products', '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(2, 'invoices', '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(3, 'carts', '2021-11-01 07:36:48', '2021-11-01 07:36:48');
 
 -- --------------------------------------------------------
 
@@ -103,18 +219,23 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(22, '2014_10_12_000000_create_users_table', 1),
-(23, '2014_10_12_100000_create_password_resets_table', 1),
-(24, '2019_08_19_000000_create_failed_jobs_table', 1),
-(25, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(26, '2021_10_30_024759_create_roles_table', 1),
-(27, '2021_10_30_025009_create_role_users_table', 1),
-(28, '2021_10_30_040900_create_permissions_table', 1),
-(29, '2021_10_30_041002_create_role_permissions_table', 1),
-(30, '2021_10_30_043827_create_products_table', 1),
-(31, '2021_10_30_064025_create_carts_table', 1),
-(32, '2021_10_30_145556_create_invoices_table', 1),
-(33, '2021_10_30_145614_create_invoice_details_table', 1);
+(49, '2014_10_12_000000_create_users_table', 1),
+(50, '2014_10_12_100000_create_password_resets_table', 1),
+(51, '2019_08_19_000000_create_failed_jobs_table', 1),
+(52, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(53, '2021_10_30_024759_create_roles_table', 1),
+(54, '2021_10_30_025009_create_role_users_table', 1),
+(55, '2021_10_30_040900_create_permissions_table', 1),
+(56, '2021_10_30_041002_create_role_permissions_table', 1),
+(57, '2021_10_30_043827_create_products_table', 1),
+(58, '2021_10_30_064025_create_carts_table', 1),
+(59, '2021_10_30_145556_create_invoices_table', 1),
+(60, '2021_10_30_145614_create_invoice_details_table', 1),
+(61, '2021_10_31_152258_create_com_tables_table', 1),
+(62, '2021_10_31_152358_create_com_activities_table', 1),
+(63, '2021_10_31_152742_create_com_activity_tables_table', 1),
+(64, '2021_10_31_153439_create_com_logs_table', 1),
+(65, '2021_10_31_153959_create_com_log_details_table', 1);
 
 -- --------------------------------------------------------
 
@@ -180,10 +301,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `stock`, `price`, `created_at`, `updated_at`) VALUES
-(1, 'jeruk', 11, 2549.00, '2021-10-30 23:42:09', '2021-10-30 23:42:09'),
-(2, 'apel', 25, 4985.00, '2021-10-30 23:42:09', '2021-10-30 23:42:09'),
-(3, 'mangga', 10, 1732.00, '2021-10-30 23:42:09', '2021-10-30 23:42:09'),
-(4, 'strawbery', 10, 4753.00, '2021-10-30 23:42:10', '2021-10-30 23:42:10');
+(1, 'jeruk', 30, 4215.00, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(2, 'apel', 14, 4422.00, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(3, 'mangga', 20, 4499.00, '2021-11-01 07:36:48', '2021-11-01 07:36:48'),
+(4, 'strawbery', 13, 2088.00, '2021-11-01 07:36:48', '2021-11-01 07:36:48');
 
 -- --------------------------------------------------------
 
@@ -267,8 +388,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@evermos.com', NULL, '$2y$10$vzcnesHe/kt9GPYZgHMPWuEzggDmRNxSKpLwNM4MGgUzqVPhhxZN.', NULL, '2021-10-30 23:42:08', '2021-10-30 23:42:08'),
-(2, 'user', 'user@evermos.com', NULL, '$2y$10$1pO7QUFZGkB6Tbpi.TJWsuJZylyQVisxhxX9QNmmSfqhENnOJmi0.', NULL, '2021-10-30 23:42:08', '2021-10-30 23:42:08');
+(1, 'admin', 'admin@evermos.com', NULL, '$2y$10$No7BoUPWaZAkQyks9pDhveF6Mh1QhKxeL.dEC5OHRl83oYIcSKLQK', NULL, '2021-11-01 07:36:47', '2021-11-01 07:36:47'),
+(2, 'user', 'user@evermos.com', NULL, '$2y$10$nuCyqGF.0leN/tT11vWZhO0EQXTOFfx.8kjcvjo8v7iM5rVMeIK9.', NULL, '2021-11-01 07:36:47', '2021-11-01 07:36:47');
 
 --
 -- Indexes for dumped tables
@@ -281,6 +402,42 @@ ALTER TABLE `carts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `carts_user_id_foreign` (`user_id`),
   ADD KEY `carts_product_id_foreign` (`product_id`);
+
+--
+-- Indexes for table `com_activities`
+--
+ALTER TABLE `com_activities`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `com_activity_tables`
+--
+ALTER TABLE `com_activity_tables`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `com_activity_tables_com_table_id_foreign` (`com_table_id`),
+  ADD KEY `com_activity_tables_com_activity_id_foreign` (`com_activity_id`);
+
+--
+-- Indexes for table `com_logs`
+--
+ALTER TABLE `com_logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `com_logs_com_activity_id_foreign` (`com_activity_id`),
+  ADD KEY `com_logs_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `com_log_details`
+--
+ALTER TABLE `com_log_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `com_log_details_com_log_id_foreign` (`com_log_id`),
+  ADD KEY `com_log_details_com_activity_table_id_foreign` (`com_activity_table_id`);
+
+--
+-- Indexes for table `com_tables`
+--
+ALTER TABLE `com_tables`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -378,6 +535,36 @@ ALTER TABLE `carts`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `com_activities`
+--
+ALTER TABLE `com_activities`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `com_activity_tables`
+--
+ALTER TABLE `com_activity_tables`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `com_logs`
+--
+ALTER TABLE `com_logs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `com_log_details`
+--
+ALTER TABLE `com_log_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `com_tables`
+--
+ALTER TABLE `com_tables`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -399,7 +586,7 @@ ALTER TABLE `invoice_details`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -453,6 +640,27 @@ ALTER TABLE `users`
 ALTER TABLE `carts`
   ADD CONSTRAINT `carts_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `carts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `com_activity_tables`
+--
+ALTER TABLE `com_activity_tables`
+  ADD CONSTRAINT `com_activity_tables_com_activity_id_foreign` FOREIGN KEY (`com_activity_id`) REFERENCES `com_activities` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `com_activity_tables_com_table_id_foreign` FOREIGN KEY (`com_table_id`) REFERENCES `com_tables` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `com_logs`
+--
+ALTER TABLE `com_logs`
+  ADD CONSTRAINT `com_logs_com_activity_id_foreign` FOREIGN KEY (`com_activity_id`) REFERENCES `com_activities` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `com_logs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `com_log_details`
+--
+ALTER TABLE `com_log_details`
+  ADD CONSTRAINT `com_log_details_com_activity_table_id_foreign` FOREIGN KEY (`com_activity_table_id`) REFERENCES `com_activity_tables` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `com_log_details_com_log_id_foreign` FOREIGN KEY (`com_log_id`) REFERENCES `com_logs` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `invoices`
