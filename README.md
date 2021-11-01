@@ -36,7 +36,7 @@ Based on the stated facts above, please do the following things:
 12. Gunakan API "Update Checkout" untuk mengubah status pembayaran "awaiting" menjadi "paid"
 
 ## Note
-1. pada applikasi sudah memiliki Admin dengan username "admin@gmail" dengan password "123456"
+1. pada applikasi sudah memiliki 2 user Admin dengan username "admin@evermos.com" dan user biasa dengan username "user@evermos.com" dengan password "123456"
 2. Untuk melihat live log saat applikasi dijalankan, lakukan perintah "tail -f storage/logs/laravel.log"
 
 
